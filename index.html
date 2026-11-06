@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" class="scrollbar-gutter-stable">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Visualize MTG draft win rates as a tier list, powered by 17Lands data, and build your own tier lists" />
+    <meta name="theme-color" content="#171717" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link
+      rel="preload"
+      href="https://cdn.jsdelivr.net/npm/@saeris/typeface-beleren-bold@1.0.1/Beleren2016SmallCaps-Bold.woff"
+      as="font"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link rel="dns-prefetch" href="https://cards.scryfall.io" />
+    <title>Limited Grades</title>
+    <script>
+      // Pick the theme before first paint so dark mode doesn't flash (same approach as limitedgrades.com).
+      (function () {
+        var theme;
+        try {
+          theme = localStorage.getItem("theme");
+        } catch (e) {}
+        if (theme === "dark" || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

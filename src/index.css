@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Beleren SmallCaps Bold";
+  /* Loaded from the npm package's CDN copy rather than redistributed in this repo. */
+  src: url("https://cdn.jsdelivr.net/npm/@saeris/typeface-beleren-bold@1.0.1/Beleren2016SmallCaps-Bold.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  html {
+    padding-right: 0 !important;
+    transition-property: background-color;
+    -webkit-tap-highlight-color: transparent;
+    @apply bg-white;
+  }
+
+  html.dark {
+    @apply bg-neutral-900;
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  svg {
+    pointer-events: none;
+  }
+}
+
+@layer utilities {
+  .rotate-y-0 {
+    transform: rotateY(0deg);
+  }
+
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  .backface-invisible {
+    backface-visibility: hidden;
+  }
+
+  .paint-order-stroke {
+    paint-order: stroke;
+  }
+
+  .scrollbar-gutter-stable {
+    scrollbar-gutter: stable;
+  }
+}
+
+/* Set icon gradients, one per rarity (as on limitedgrades.com) */
+.icon-side-stop,
+.icon-middle-stop {
+  stop-color: #262626;
+}
+
+.dark .icon-side-stop,
+.dark .icon-middle-stop {
+  stop-color: #f5f5f5;
+}
+
+.icon-uncommon .icon-side-stop {
+  stop-color: #5a6572;
+}
+
+.icon-uncommon .icon-middle-stop {
+  stop-color: #9e9e9e;
+}
+
+.icon-rare .icon-side-stop {
+  stop-color: #876a3b;
+}
+
+.icon-rare .icon-middle-stop {
+  stop-color: #dfbd6b;
+}
+
+.icon-mythic .icon-side-stop {
+  stop-color: #b21f0f;
+}
+
+.icon-mythic .icon-middle-stop {
+  stop-color: #f38300;
+}
+
+/* ---- Tier lists ---- */
+
+/* A card that just moved (keyboard, quick rank, search) pulses so the eye can follow it. */
+@keyframes lg-flash {
+  0% {
+    box-shadow: 0 0 0 3px rgb(59 130 246 / 0.9);
+  }
+  100% {
+    box-shadow: 0 0 0 3px rgb(59 130 246 / 0);
+  }
+}
+
+.dark .lg-flash,
+.lg-flash {
+  animation: lg-flash 1.2s ease-out;
+}
+
+.dark .lg-flash {
+  animation-name: lg-flash-dark;
+}
+
+@keyframes lg-flash-dark {
+  0% {
+    box-shadow: 0 0 0 3px rgb(217 119 6 / 0.95);
+  }
+  100% {
+    box-shadow: 0 0 0 3px rgb(217 119 6 / 0);
+  }
+}
+
+/* The card being dragged stays in place, faded, until it's dropped. */
+[data-card].lg-drag-source {
+  opacity: 0.35;
+}
+
+body.lg-dragging,
+body.lg-dragging * {
+  cursor: grabbing !important;
+  user-select: none !important;
+}
+
+/* Compare view: the card under the cursor and its twin in the other list. */
+[data-compare-card].lg-match {
+  outline: 2px solid rgb(59 130 246);
+  outline-offset: 1px;
+  z-index: 1;
+  position: relative;
+}
+
+.dark [data-compare-card].lg-match {
+  outline-color: rgb(217 119 6);
+}
+
+[data-compare-card].lg-match-twin {
+  animation: lg-flash 1.2s ease-out infinite;
+}
+
+.dark [data-compare-card].lg-match-twin {
+  animation-name: lg-flash-dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-flash,
+  .dark .lg-flash,
+  [data-compare-card].lg-match-twin,
+  .dark [data-compare-card].lg-match-twin {
+    animation: none;
+  }
+}
